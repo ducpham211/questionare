@@ -7,8 +7,22 @@
         width: 400px;
     }
     #img4 {
-        width: 1200px;
-        height: 600px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;  /* Tràn chiều rộng */
+        height: 100vh; /* Tràn chiều cao */
+        object-fit: cover; /* Giữ tỉ lệ ảnh */
+        z-index: 999; /* Đảm bảo ảnh nằm trên tất cả các phần tử khác */
+    }
+    #marealVideo {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 1000; /* Đảm bảo video nằm trên cả ảnh */
     }
     body {
         font-family: 'Courier New', Courier, monospace;
@@ -23,28 +37,49 @@
     }
 </style>
 <body>
-<h2><i>Is Viet Duc handsome ? (be careful with your answer unless u wanna get into trouble !!!)</i></h2>
+<h2><i>Is Viet Duc handsome? (be careful with your answer unless u wanna get into trouble !!!)</i></h2>
 <button onclick="showImage('img1')">YES, very handsome !!!</button>
 <button onclick="showImage('img2')">Certainly !!!</button>
 <button onclick="showImage('img3')">Of course Yes !!!</button>
 <button onclick="showImage('img4')">No, sure !!!</button>
 
 <div>
-    <img id='img1' src="correct answer.jpg" alt="handsome">
+    <img id="img1" src="correct answer.jpg" alt="handsome">
     <img id="img2" src="correct answer.jpg" alt="handsome">
     <img id="img3" src="correct answer.jpg" alt="handsome">
     <img id="img4" src="ghost.jpg" alt="Not">
 </div>
 
+<!-- Thêm video -->
+<video id="marealVideo" controls>
+    <source src="mareal.mp4" type="video/mp4">
+    Trình duyệt của bạn không hỗ trợ video.
+</video>
+
+<!-- Thêm âm thanh tiếng la -->
+<audio id="screamSound" src="scream.mp3"></audio>
+
 <script>
-    function showImage(imgId){
+    function showImage(imgId) {
+        // Ẩn tất cả ảnh và video trước
         document.getElementById('img1').style.display = 'none';
         document.getElementById('img2').style.display = 'none';
         document.getElementById('img3').style.display = 'none';
         document.getElementById('img4').style.display = 'none';       
-        
+        document.getElementById('marealVideo').style.display = 'none';  // Ẩn video
+
+        // Hiển thị ảnh được chọn
         document.getElementById(imgId).style.display = 'block';
+
+        // Nếu ảnh img4 được chọn, phát tiếng la và hiển thị video
+        if (imgId === 'img4') {
+            document.getElementById('screamSound').play();  // Phát âm thanh tiếng la
+            var video = document.getElementById('marealVideo');
+            video.style.display = 'block';  // Hiển thị video
+            video.play();  // Phát video
+        }
     }
 </script>
+
 </body>
 </html>
